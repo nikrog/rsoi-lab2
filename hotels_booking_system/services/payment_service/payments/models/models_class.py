@@ -14,5 +14,12 @@ class PaymentModel(BaseModel):
             'price': self.price
         }
 
+    def to_dict_with_uid(self):
+        return {
+            'status': str(self.status),
+            'price': self.price,
+            'payment_uid': str(self.payment_uid)
+        }
+
     class Meta:
         db_table = 'payment'

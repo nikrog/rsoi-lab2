@@ -2,7 +2,7 @@ import datetime
 import json
 import uuid
 from quart import Blueprint, Response, request
-from reservation.models.models_class import ReservationModel
+from reservation.models.models_class import ReservationModel, HotelsModel
 
 postreservationb = Blueprint('post_reservation', __name__, )
 
@@ -15,7 +15,7 @@ def validate_body(body):
 
     errors = []
 
-    if (('hotelId' not in body or type(body['hotelId']) is not int) or (
+    if (('hotelUid' not in body or type(body['hotelUid']) is not str) or (
             'startDate' not in body or type(body['startDate']) is not str) or (
             'endDate' not in body or type(body['endDate']) is not str) or (
             'paymentUid' not in body or type(body['paymentUid']) is not str)):
@@ -36,14 +36,16 @@ async def post_reservation() -> Response:
     if len(errors) > 0:
         return Response(status=400, content_type='application/json', response=json.dumps(errors))
 
-    rental = ReservationModel.create(
+    hotel = HotelsModel.select().where(HotelsModel.hotel_uid == body['hotelUid']).get().to_dict_full()
+
+    reservation = ReservationModel.create(
         reservation_uid=uuid.uuid4(),
         username=user,
         payment_uid=uuid.UUID(body['paymentUid']),
-        hotel_id=body['hotelId'],
+        hotel_id=hotel['hotel_id'],
         status='PAID',
         start_date=datetime.datetime.strptime(body['startDate'], "%Y-%m-%d").date(),
         end_date=datetime.datetime.strptime(body['endDate'], "%Y-%m-%d").date(),
     )
 
-    return Response(status=200, content_type='application/json', response=json.dumps(rental.to_dict()))
+    return Response(status=200, content_type='application/json', response=json.dumps(reservation.to_dict()))

@@ -30,4 +30,4 @@ async def post_payment() -> Response:
                                   price=body['price'],
                                   status='PAID')
 
-    return Response(status=200, content_type='application/json', response=json.dumps(payment.to_dict()))
+    return Response(status=200, content_type='application/json', response=json.dumps(payment.to_dict_with_uid()))

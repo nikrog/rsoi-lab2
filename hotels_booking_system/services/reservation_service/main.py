@@ -2,6 +2,7 @@ from quart import Quart
 from reservation.models.models_class import ReservationModel, HotelsModel
 from reservation.interface.getHotels import gethotelsb
 from reservation.interface.getHotel import gethotelb
+from reservation.interface.getHotel2 import gethotel2b
 from reservation.interface.getReservations import getreservationsb
 from reservation.interface.getReservation import getreservationb
 from reservation.interface.postReservation import postreservationb
@@ -11,6 +12,7 @@ from reservation.interface.healthCheck import healthcheckb
 app = Quart(__name__)
 app.register_blueprint(gethotelsb)
 app.register_blueprint(gethotelb)
+app.register_blueprint(gethotel2b)
 app.register_blueprint(getreservationsb)
 app.register_blueprint(getreservationb)
 app.register_blueprint(postreservationb)

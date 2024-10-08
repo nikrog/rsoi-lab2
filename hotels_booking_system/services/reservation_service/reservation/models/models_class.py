@@ -31,6 +31,18 @@ class HotelsModel(BaseModel):
             'stars': self.stars
         }
 
+    def to_dict_full(self):
+        return {
+            'hotelId': id,
+            'hotelUid': str(self.hotel_uid),
+            'name': str(self.name),
+            'country': str(self.country),
+            'city': str(self.city),
+            'address': str(self.address),
+            'stars': self.stars,
+            'price': self.price
+        }
+
     class Meta:
         db_table = 'hotels'
 

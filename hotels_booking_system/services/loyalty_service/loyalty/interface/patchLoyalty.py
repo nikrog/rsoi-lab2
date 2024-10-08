@@ -27,4 +27,4 @@ async def patch_loyalty() -> Response:
         return Response(status=200, content_type='application/json', response=json.dumps(loyalty.to_dict()))
     except Exception as e:
         return Response(status=404, content_type='application/json',
-                        response=json.dumps({'errors': ['Reservation not found']}))
+                        response=json.dumps({'errors': ['Loyalty not found']}))

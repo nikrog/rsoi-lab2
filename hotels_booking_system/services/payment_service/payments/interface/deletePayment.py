@@ -14,4 +14,4 @@ async def delete_payment(paymentUid: str) -> Response:
         return Response(status=200, content_type='application/json', response=json.dumps(payment.to_dict()))
     except:
         return Response(status=404, content_type='application/json',
-                        response=json.dumps({'errors': ['Payment not found']}))
+                        response=json.dumps({'message': ['Payment not found']}))

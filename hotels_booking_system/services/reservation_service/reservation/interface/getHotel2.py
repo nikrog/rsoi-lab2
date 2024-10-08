@@ -2,13 +2,13 @@ import json
 from quart import Blueprint, Response
 from reservation.models.models_class import HotelsModel
 
-gethotelb = Blueprint('get_hotel', __name__, )
+gethotel2b = Blueprint('get_hotel2', __name__, )
 
 
-@gethotelb.route('/api/v1/hotels/<int:hotelId>', methods=['GET'])
-async def get_hotel(hotelId: int) -> Response:
+@gethotel2b.route('/api/v1/hotels/<int:hotelUid>', methods=['GET'])
+async def get_hotel(hotelUid: str) -> Response:
     try:
-        hotel = HotelsModel.select().where(HotelsModel.id == hotelId).get().to_dict_short()
+        hotel = HotelsModel.select().where(HotelsModel.hotel_uid == hotelUid).get().to_dict()
         return Response(status=200, content_type='application/json', response=json.dumps(hotel))
     except:
         return Response(status=404, content_type='application/json', response=json.dumps({'errors': ['Hotel not found']}))

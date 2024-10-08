@@ -9,9 +9,17 @@ def get_data_from_service(service_url, headers={}, timeout=5):
         return None
 
 
-def post_data_from_service(service_url, headers={}, timeout=5, data={}):
+def post_data_to_service(service_url, headers={}, timeout=5, data={}):
     try:
         response = requests.post(service_url, timeout=timeout, headers=headers, json=data)
+        return response
+    except:
+        return None
+
+
+def patch_data_to_service(service_url, headers={}, timeout=5, data={}):
+    try:
+        response = requests.patch(service_url, timeout=timeout, headers=headers, json=data)
         return response
     except:
         return None

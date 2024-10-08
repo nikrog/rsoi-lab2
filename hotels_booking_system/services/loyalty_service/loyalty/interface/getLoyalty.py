@@ -14,4 +14,8 @@ async def get_loyalty() -> Response:
     user = request.headers['X-User-Name']
     loyalty = LoyaltyModel.select().where(LoyaltyModel.username == user).get().to_dict()
 
-    return Response(status=200, content_type='application/json', response=json.dumps(loyalty))
+    if loyalty is not None:
+        return Response(status=200, content_type='application/json', response=json.dumps(loyalty))
+    else:
+        return Response(status=404, content_type='application/json', response=json.dumps({'errors': ['user not found']}))
+

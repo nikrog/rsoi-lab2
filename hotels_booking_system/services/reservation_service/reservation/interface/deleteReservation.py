@@ -12,7 +12,7 @@ async def delete_reservation(reservationUid: str) -> Response:
 
         if reservation.status != 'PAID':
             return Response(status=403, content_type='application/json',
-                            response=json.dumps({'errors': ['Reservation not paid.']}))
+                            response=json.dumps({'message': ['Reservation not paid.']}))
 
         reservation.status = 'CANCELED'
         reservation.save()
@@ -20,4 +20,4 @@ async def delete_reservation(reservationUid: str) -> Response:
         return Response(status=200, content_type='application/json', response=json.dumps(reservation.to_dict()))
     except Exception as e:
         return Response(status=404, content_type='application/json',
-                        response=json.dumps({'errors': ['Reservation not found']}))
+                        response=json.dumps({'message': ['Reservation not found']}))

@@ -9,7 +9,7 @@ deleteloyaltyb = Blueprint('delete_loyalty', __name__, )
 async def delete_loyalty() -> Response:
     if 'X-User-Name' not in request.headers.keys():
         return Response(status=400, content_type='application/json',
-                        response=json.dumps({'errors': ['user not found']}))
+                        response=json.dumps({'message': ['user not found']}))
 
     user = request.headers['X-User-Name']
 
@@ -29,4 +29,4 @@ async def delete_loyalty() -> Response:
         return Response(status=200, content_type='application/json', response=json.dumps(loyalty.to_dict()))
     except Exception as e:
         return Response(status=404, content_type='application/json',
-                        response=json.dumps({'errors': ['Loyalty not found']}))
+                        response=json.dumps({'message': ['Loyalty not found']}))
