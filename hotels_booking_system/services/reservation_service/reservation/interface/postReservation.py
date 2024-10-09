@@ -4,7 +4,7 @@ import uuid
 from quart import Blueprint, Response, request
 from reservation.models.models_class import ReservationModel, HotelsModel
 
-postreservationb = Blueprint('post_reservation', __name__, )
+postreservationb = Blueprint('post_cur_reservation', __name__, )
 
 
 def validate_body(body):
@@ -36,13 +36,14 @@ async def post_reservation() -> Response:
     if len(errors) > 0:
         return Response(status=400, content_type='application/json', response=json.dumps(errors))
 
-    hotel = HotelsModel.select().where(HotelsModel.hotel_uid == body['hotelUid']).get().to_dict_full()
+    hotel = HotelsModel.select().where(HotelsModel.hotel_uid == body['hotelUid']).get()
 
     reservation = ReservationModel.create(
         reservation_uid=uuid.uuid4(),
         username=user,
         payment_uid=uuid.UUID(body['paymentUid']),
-        hotel_id=hotel['hotel_id'],
+        hotel_id=hotel.id,
+        #hotel_id=hotel['hotel_id'],
         status='PAID',
         start_date=datetime.datetime.strptime(body['startDate'], "%Y-%m-%d").date(),
         end_date=datetime.datetime.strptime(body['endDate'], "%Y-%m-%d").date(),

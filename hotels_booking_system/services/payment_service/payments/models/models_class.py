@@ -18,7 +18,7 @@ class PaymentModel(BaseModel):
         return {
             'status': str(self.status),
             'price': self.price,
-            'payment_uid': str(self.payment_uid)
+            'paymentUid': str(self.payment_uid)
         }
 
     class Meta:

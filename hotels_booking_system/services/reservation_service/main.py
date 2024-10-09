@@ -4,7 +4,7 @@ from reservation.interface.getHotels import gethotelsb
 from reservation.interface.getHotel import gethotelb
 from reservation.interface.getHotel2 import gethotel2b
 from reservation.interface.getReservations import getreservationsb
-from reservation.interface.getReservation import getreservationb
+from reservation.interface.getReservation import getcurreservationb
 from reservation.interface.postReservation import postreservationb
 from reservation.interface.deleteReservation import deletereservationb
 from reservation.interface.healthCheck import healthcheckb
@@ -14,7 +14,7 @@ app.register_blueprint(gethotelsb)
 app.register_blueprint(gethotelb)
 app.register_blueprint(gethotel2b)
 app.register_blueprint(getreservationsb)
-app.register_blueprint(getreservationb)
+app.register_blueprint(getcurreservationb)
 app.register_blueprint(postreservationb)
 app.register_blueprint(deletereservationb)
 app.register_blueprint(healthcheckb)

@@ -20,6 +20,9 @@ async def get_reservation(reservationUid: str) -> Response:
         return Response(status=500, content_type='application/json',
                         response=json.dumps({'errors': ['Reservation service is unavailable']}))
 
+    if response.status_code != 200:
+        return Response(status=response.status_code, content_type='application/json', response=response.text)
+
     reservation = response.json()
 
     response = get_data_from_service('http://' + os.environ['RESERVATION_SERVICE_HOST'] + ':' + os.environ[
@@ -28,6 +31,8 @@ async def get_reservation(reservationUid: str) -> Response:
     if response is None:
         return Response(status=500, content_type='application/json',
                         response=json.dumps({'errors': ['Reservation service is unavailable']}))
+    if response.status_code != 200:
+        return Response(status=response.status_code, content_type='application/json', response=response.text)
 
     del reservation['hotel_id']
     reservation['hotel'] = response.json()

@@ -74,7 +74,7 @@ async def post_reservations() -> Response:
 
     discount = loyalty['discount']
 
-    price_with_discount = price * (1 - discount / 100)
+    price_with_discount = int(price * (1 - discount / 100))
 
     response = post_data_to_service(
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT'] + '/api/v1/payment',
@@ -101,10 +101,13 @@ async def post_reservations() -> Response:
         return Response(status=response.status_code, content_type='application/json', response=response.text)
 
     loyalty = response.json()
+
     response = post_data_to_service('http://' + os.environ['RESERVATION_SERVICE_HOST'] + ':' + os.environ['RESERVATION_SERVICE_PORT'] + '/api/v1/reservations',
                                       timeout=5, headers={'X-User-Name': request.headers['X-User-Name']},
-                                      data={'hotelId': hotel['hotelId'], 'startDate': body['startDate'], 'endDate': body['endDate'],
+                                      data={'hotelUid': hotel['hotelUid'], 'startDate': body['startDate'],
+                                            'endDate': body['endDate'],
                                             'paymentUid': payment['paymentUid']})
+
     if response is None:
         return Response(status=500, content_type='application/json',
                         response=json.dumps({'errors': ['Reservation service not working']}))
@@ -114,7 +117,7 @@ async def post_reservations() -> Response:
 
     reservation = response.json()
 
-    del reservation['hotelId']
+    del reservation['hotel_id']
     reservation['hotelUid'] = hotel['hotelUid']
     del reservation['username']
     reservation['discount'] = discount

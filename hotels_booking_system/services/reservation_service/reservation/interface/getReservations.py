@@ -2,7 +2,7 @@ import json
 from quart import Blueprint, Response, request
 from reservation.models.models_class import ReservationModel
 
-getreservationsb = Blueprint('get_reservations', __name__,)
+getreservationsb = Blueprint('get_cur_reservations', __name__,)
 
 
 @getreservationsb.route('/api/v1/reservations', methods=['GET'])
