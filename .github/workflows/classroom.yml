@@ -35,7 +35,7 @@ jobs:
           cd ..
           cd hotels_booking_system/scripts_db
           psql "user=postgres hostaddr=127.0.0.1 port=5432 password=postgres" < create_tables.sql
-          psql "user=postgres hostaddr=127.0.0.1 port=5432 password=postgres" < fill_cars_table.sql
+          psql "user=postgres hostaddr=127.0.0.1 port=5432 password=postgres" < fill_tables.sql
           cd ..
 
       - name: Run containers

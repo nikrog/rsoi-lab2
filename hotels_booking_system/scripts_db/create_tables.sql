@@ -1,4 +1,4 @@
-\c reservation;
+\c reservations;
 
 CREATE TABLE reservation
 (
@@ -13,7 +13,7 @@ CREATE TABLE reservation
     end_data        TIMESTAMP WITH TIME ZONE
 );
 
-\c hotels;
+\c reservations;
 
 CREATE TABLE hotels
 (
@@ -27,7 +27,7 @@ CREATE TABLE hotels
     price     INT          NOT NULL
 );
 
-\c payment;
+\c payments;
 
 CREATE TABLE payment
 (
@@ -38,7 +38,7 @@ CREATE TABLE payment
     price       INT         NOT NULL
 );
 
-\c loyalty;
+\c loyalties;
 
 CREATE TABLE loyalty
 (
